@@ -135,7 +135,7 @@ app.put("/movies/:movieId", async (req, res) => {
     To delete specific movie data with
     id: movieId from the movie table.
 */
-app.delete("/movies/:movieId", (req, res) => {
+app.delete("/movies/:movieId", async (req, res) => {
   const { movieId } = req.params;
 
   const deleteSpecificMovieQuery = `
@@ -143,6 +143,9 @@ app.delete("/movies/:movieId", (req, res) => {
     FROM movie
     WHERE movie_id = ${movieId};
     `;
+
+  await moviesDBConnectionObj.run(deleteSpecificMovieQuery);
+  res.send("Movie Removed");
 });
 
 /*
