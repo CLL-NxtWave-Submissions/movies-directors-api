@@ -129,4 +129,20 @@ app.put("/movies/:movieId", async (req, res) => {
   res.send("Movie Details Updated");
 });
 
+/*
+    End-Point 5: DELETE /movies/:movieId
+    ------------
+    To delete specific movie data with
+    id: movieId from the movie table.
+*/
+app.delete("/movies/:movieId", (req, res) => {
+  const { movieId } = req.params;
+
+  const deleteSpecificMovieQuery = `
+    DELETE
+    FROM movie
+    WHERE movie_id = ${movieId};
+    `;
+});
+
 module.exports = app;
