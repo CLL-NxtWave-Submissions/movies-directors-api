@@ -103,4 +103,30 @@ app.get("/movies/:movieId", async (req, res) => {
   res.send(processedMovieData);
 });
 
+/*
+    End-Point 4: PUT /movies/:movieId
+    ------------
+    To update data of specific movie 
+    with id: movieId, in the movie
+    table.
+*/
+app.put("/movies/:movieId", async (req, res) => {
+  const { movieId } = req.params;
+  const { directorId, movieName, leadActor } = req.body;
+
+  const updateSpecificMovieDataQuery = `
+    UPDATE 
+        movie
+    SET
+        director_id = ${directorId},
+        movie_name = '${movieName}',
+        lead_actor = '${leadActor}'
+    WHERE
+        movie_id = ${movieId};
+    `;
+
+  await moviesDBConnectionObj.run(updateSpecificMovieDataQuery);
+  res.send("Movie Details Updated");
+});
+
 module.exports = app;
