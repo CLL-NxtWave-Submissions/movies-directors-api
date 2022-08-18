@@ -145,4 +145,25 @@ app.delete("/movies/:movieId", (req, res) => {
     `;
 });
 
+/*
+    End-Point 6: GET /directors
+    ------------
+    To fetch data of all directors
+*/
+app.get("/directors", async (req, res) => {
+  const getAllDirectorsQuery = `
+        SELECT *
+        FROM director;
+    `;
+
+  const allDirectorsData = await moviesDBConnectionObj.all(
+    getAllDirectorsQuery
+  );
+  const processedDirectorsData = allDirectorsData.map((singleDirectorData) => ({
+    directorId: singleDirectorData.director_id,
+    directorName: singleDirectorData.director_name,
+  }));
+  res.send(processedDirectorsData);
+});
+
 module.exports = app;
