@@ -86,12 +86,13 @@ app.get("/movies/:movieId", async (req, res) => {
   const getSpecificMovieDataQuery = `
     SELECT *
     FROM movie
-    WHERE movieId = ${movieId};
+    WHERE movie_id = ${movieId};
     `;
 
-  const requestedMovieData = moviesDBConnectionObj.get(
+  const requestedMovieData = await moviesDBConnectionObj.get(
     getSpecificMovieDataQuery
   );
+
   const processedMovieData = {
     movieId: requestedMovieData.movie_id,
     directorId: requestedMovieData.director_id,
