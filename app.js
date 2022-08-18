@@ -152,6 +152,7 @@ app.delete("/movies/:movieId", async (req, res) => {
     End-Point 6: GET /directors
     ------------
     To fetch data of all directors
+    from director table
 */
 app.get("/directors", async (req, res) => {
   const getAllDirectorsQuery = `
