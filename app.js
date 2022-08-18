@@ -166,4 +166,35 @@ app.get("/directors", async (req, res) => {
   res.send(processedDirectorsData);
 });
 
+/*
+    End-Point 7: GET /directors/:directorId/movies
+    ------------
+    To fetch names of movies directed by a 
+    specific director with id: directorId,
+    from director table
+*/
+app.get("/directors/:directorId/movies", async (req, res) => {
+  const { directorId } = req.params;
+
+  const getMoviesOfSpecificDirectorQuery = `
+        SELECT 
+            *
+        FROM 
+            movie
+        WHERE
+            director_id = ${directorId}; 
+    `;
+
+  const moviesOfSpecificDirector = await moviesDBConnectionObj.all(
+    getMoviesOfSpecificDirectorQuery
+  );
+  const processedMoviesOfSpecificDirector = moviesOfSpecificDirector.map(
+    (singleMovieData) => ({
+      movieName: singleMovieData.movie_name,
+    })
+  );
+
+  res.send(processedMoviesOfSpecificDirector);
+});
+
 module.exports = app;
